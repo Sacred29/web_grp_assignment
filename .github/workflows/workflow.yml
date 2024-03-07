@@ -1,18 +1,18 @@
 on: [push]
 
 jobs:
-    deploy_job:
-    runs-on: ubuntu-latest
+  upload_to_sftp:
     name: deploy
+    runs-on: ubuntu-latest
     steps:
-        - name: Checkout
+      - name: Checkout
         uses: actions/checkout@v2
-        - name: deploy file
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      - name: SFTP Sync
+        uses: swillner/sftp-sync-action@v1.0
         with:
-            username: ${{ secrets.FTP_USERNAME }}
-            server: ${{ secrets.FTP_SERVER }}
-            ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
-            local_path: './*'
-            remote_path: '/var/www/html'
-           
+          server: "${{ secrets.FTP_SERVER }}"
+          user: "${{ secrets.FTP_USERNAME }}"
+          user_private_key: "${{ secrets.SSH_PRIVATE_KEY }} "
+          host_public_key: "${{ secrets.SSH_Public_KEY }}"
+          remote: /var/www/html
+          mirror_options: "--exclude-glob=.git*/ --verbose"
