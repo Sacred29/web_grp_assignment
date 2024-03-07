@@ -1,12 +1,11 @@
 # .github/workflows/workflow.yml
 jobs:
     deployment_job:
-        ...
         steps:
             - actions/checkout@v1
             - uses: shivammathur/setup-php@master
-                with:
-                  php-version: 7.3
+                with: 
+                    php-version: 7.3
             - run: composer install
             # Make sure the @0.3.1 matches the current version of the action
             # You can also use `master`, but it's best to lock to a specific version
